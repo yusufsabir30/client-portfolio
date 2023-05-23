@@ -6901,8 +6901,7 @@ function getWidthOrHeight( elem, dimension, extra ) {
 		val = curCSS( elem, dimension, styles ),
 		offsetProp = "offset" + dimension[ 0 ].toUpperCase() + dimension.slice( 1 );
 
-	// Support: Firefox <=54
-	// Return a confounding non-pixel value or feign ignorance, as appropriate.
+
 	if ( rnumnonpx.test( val ) ) {
 		if ( !extra ) {
 			return val;
@@ -6910,24 +6909,12 @@ function getWidthOrHeight( elem, dimension, extra ) {
 		val = "auto";
 	}
 
-
-	// Support: IE 9 - 11 only
-	// Use offsetWidth/offsetHeight for when box sizing is unreliable.
-	// In those cases, the computed value can be trusted to be border-box.
 	if ( ( !support.boxSizingReliable() && isBorderBox ||
 
-		// Support: IE 10 - 11+, Edge 15 - 18+
-		// IE/Edge misreport `getComputedStyle` of table rows with width/height
-		// set in CSS while `offset*` properties report correct values.
-		// Interestingly, in some cases IE 9 doesn't suffer from this issue.
 		!support.reliableTrDimensions() && nodeName( elem, "tr" ) ||
 
-		// Fall back to offsetWidth/offsetHeight when value is "auto"
-		// This happens for inline elements with no explicit setting (gh-3571)
 		val === "auto" ||
 
-		// Support: Android <=4.1 - 4.3 only
-		// Also use offsetWidth/offsetHeight for misreported inline dimensions (gh-3602)
 		!parseFloat( val ) && jQuery.css( elem, "display", false, styles ) === "inline" ) &&
 
 		// Make sure the element is visible & connected
@@ -6935,9 +6922,6 @@ function getWidthOrHeight( elem, dimension, extra ) {
 
 		isBorderBox = jQuery.css( elem, "boxSizing", false, styles ) === "border-box";
 
-		// Where available, offsetWidth/offsetHeight approximate border box dimensions.
-		// Where not available (e.g., SVG), assume unreliable box-sizing and interpret the
-		// retrieved value as a content box dimension.
 		valueIsBorderBox = offsetProp in elem;
 		if ( valueIsBorderBox ) {
 			val = elem[ offsetProp ];
@@ -7021,9 +7005,6 @@ jQuery.extend( {
 			isCustomProp = rcustomProp.test( name ),
 			style = elem.style;
 
-		// Make sure that we're working with the right name. We don't
-		// want to query the value if it is a CSS custom property
-		// since they are user-defined.
 		if ( !isCustomProp ) {
 			name = finalPropName( origName );
 		}
@@ -7048,9 +7029,6 @@ jQuery.extend( {
 				return;
 			}
 
-			// If a number was passed in, add the unit (except for certain CSS properties)
-			// The isCustomProp check can be removed in jQuery 4.0 when we only auto-append
-			// "px" to a few hardcoded values.
 			if ( type === "number" && !isCustomProp ) {
 				value += ret && ret[ 3 ] || ( jQuery.cssNumber[ origName ] ? "" : "px" );
 			}
@@ -7090,9 +7068,6 @@ jQuery.extend( {
 			origName = camelCase( name ),
 			isCustomProp = rcustomProp.test( name );
 
-		// Make sure that we're working with the right name. We don't
-		// want to modify the value if it is a CSS custom property
-		// since they are user-defined.
 		if ( !isCustomProp ) {
 			name = finalPropName( origName );
 		}
@@ -7130,16 +7105,8 @@ jQuery.each( [ "height", "width" ], function( _i, dimension ) {
 		get: function( elem, computed, extra ) {
 			if ( computed ) {
 
-				// Certain elements can have dimension info if we invisibly show them
-				// but it must have a current display style that would benefit
 				return rdisplayswap.test( jQuery.css( elem, "display" ) ) &&
 
-					// Support: Safari 8+
-					// Table columns in Safari have non-zero offsetWidth & zero
-					// getBoundingClientRect().width unless display is changed.
-					// Support: IE <=11 only
-					// Running getBoundingClientRect on a disconnected node
-					// in IE throws an error.
 					( !elem.getClientRects().length || !elem.getBoundingClientRect().width ) ?
 					swap( elem, cssShow, function() {
 						return getWidthOrHeight( elem, dimension, extra );
@@ -7151,9 +7118,6 @@ jQuery.each( [ "height", "width" ], function( _i, dimension ) {
 		set: function( elem, value, extra ) {
 			var matches,
 				styles = getStyles( elem ),
-
-				// Only read styles.position if the test has a chance to fail
-				// to avoid forcing a reflow.
 				scrollboxSizeBuggy = !support.scrollboxSize() &&
 					styles.position === "absolute",
 
@@ -7171,8 +7135,6 @@ jQuery.each( [ "height", "width" ], function( _i, dimension ) {
 					) :
 					0;
 
-			// Account for unreliable border-box dimensions by comparing offset* to computed and
-			// faking a content-box to get border and padding (gh-3699)
 			if ( isBorderBox && scrollboxSizeBuggy ) {
 				subtract -= Math.ceil(
 					elem[ "offset" + dimension[ 0 ].toUpperCase() + dimension.slice( 1 ) ] -
@@ -7930,10 +7892,6 @@ jQuery.fn.extend( {
 					timers.splice( index, 1 );
 				}
 			}
-
-			// Start the next in the queue if the last step wasn't forced.
-			// Timers currently will call their complete callbacks, which
-			// will dequeue but only if they were gotoEnd.
 			if ( dequeue || !gotoEnd ) {
 				jQuery.dequeue( this, type );
 			}
@@ -8725,9 +8683,6 @@ jQuery.each( [ "radio", "checkbox" ], function() {
 
 
 
-// Return jQuery for attributes-only inclusion
-
-
 support.focusin = "onfocusin" in window;
 
 
@@ -8795,8 +8750,6 @@ jQuery.extend( jQuery.event, {
 			return;
 		}
 
-		// Determine event propagation path in advance, per W3C events spec (trac-9951)
-		// Bubble up to document, then to window; watch for a global ownerDocument var (trac-9724)
 		if ( !onlyHandlers && !special.noBubble && !isWindow( elem ) ) {
 
 			bubbleType = special.delegateType || type;
@@ -8847,8 +8800,6 @@ jQuery.extend( jQuery.event, {
 				special._default.apply( eventPath.pop(), data ) === false ) &&
 				acceptData( elem ) ) {
 
-				// Call a native DOM method on the target with the same name as the event.
-				// Don't do default actions on window, that's where global variables be (trac-6170)
 				if ( ontype && isFunction( elem[ type ] ) && !isWindow( elem ) ) {
 
 					// Don't re-trigger an onFOO event when we call its FOO() method
@@ -8916,14 +8867,7 @@ jQuery.fn.extend( {
 } );
 
 
-// Support: Firefox <=44
-// Firefox doesn't have focus(in | out) events
-// Related ticket - https://bugzilla.mozilla.org/show_bug.cgi?id=687787
-//
-// Support: Chrome <=48 - 49, Safari <=9.0 - 9.1
-// focus(in | out) events fire after focus & blur events,
-// which is spec violation - http://www.w3.org/TR/DOM-Level-3-Events/#events-focusevent-event-order
-// Related ticket - https://bugs.chromium.org/p/chromium/issues/detail?id=449857
+
 if ( !support.focusin ) {
 	jQuery.each( { focus: "focusin", blur: "focusout" }, function( orig, fix ) {
 
@@ -9281,9 +9225,6 @@ function ajaxHandleResponses( s, jqXHR, responses ) {
 		finalDataType = finalDataType || firstDataType;
 	}
 
-	// If we found a dataType
-	// We add the dataType to the list if needed
-	// and return the corresponding response
 	if ( finalDataType ) {
 		if ( finalDataType !== dataTypes[ 0 ] ) {
 			dataTypes.unshift( finalDataType );
@@ -9409,18 +9350,6 @@ jQuery.extend( {
 		async: true,
 		contentType: "application/x-www-form-urlencoded; charset=UTF-8",
 
-		/*
-		timeout: 0,
-		data: null,
-		dataType: null,
-		username: null,
-		password: null,
-		cache: null,
-		throws: false,
-		traditional: false,
-		headers: {},
-		*/
-
 		accepts: {
 			"*": allTypes,
 			text: "text/plain",
@@ -9441,8 +9370,7 @@ jQuery.extend( {
 			json: "responseJSON"
 		},
 
-		// Data converters
-		// Keys separate source (or catchall "*") and destination types with a single space
+
 		converters: {
 
 			// Convert anything to text
@@ -9458,19 +9386,14 @@ jQuery.extend( {
 			"text xml": jQuery.parseXML
 		},
 
-		// For options that shouldn't be deep extended:
-		// you can add your own custom options here if
-		// and when you create one that shouldn't be
-		// deep extended (see ajaxExtend)
+
 		flatOptions: {
 			url: true,
 			context: true
 		}
 	},
 
-	// Creates a full fledged settings object into target
-	// with both ajaxSettings and settings fields.
-	// If target is omitted, writes into ajaxSettings.
+
 	ajaxSetup: function( target, settings ) {
 		return settings ?
 
@@ -9511,10 +9434,8 @@ jQuery.extend( {
 			// Url cleanup var
 			urlAnchor,
 
-			// Request state (becomes false upon send and true upon completion)
 			completed,
 
-			// To know if global events are to be dispatched
 			fireGlobals,
 
 			// Loop variable
@@ -9529,7 +9450,7 @@ jQuery.extend( {
 			// Callbacks context
 			callbackContext = s.context || s,
 
-			// Context for global events is callbackContext if it is a DOM node or jQuery collection
+		
 			globalEventContext = s.context &&
 				( callbackContext.nodeType || callbackContext.jquery ) ?
 				jQuery( callbackContext ) :
@@ -9626,9 +9547,6 @@ jQuery.extend( {
 		// Attach deferreds
 		deferred.promise( jqXHR );
 
-		// Add protocol if not provided (prefilters might expect it)
-		// Handle falsy url in the settings object (trac-10093: consistency with old signature)
-		// We also use the url parameter if available
 		s.url = ( ( url || s.url || location.href ) + "" )
 			.replace( rprotocol, location.protocol + "//" );
 
@@ -9638,25 +9556,21 @@ jQuery.extend( {
 		// Extract dataTypes list
 		s.dataTypes = ( s.dataType || "*" ).toLowerCase().match( rnothtmlwhite ) || [ "" ];
 
-		// A cross-domain request is in order when the origin doesn't match the current origin.
+		
 		if ( s.crossDomain == null ) {
 			urlAnchor = document.createElement( "a" );
 
-			// Support: IE <=8 - 11, Edge 12 - 15
-			// IE throws exception on accessing the href property if url is malformed,
-			// e.g. http://example.com:80x/
+			
 			try {
 				urlAnchor.href = s.url;
 
-				// Support: IE <=8 - 11 only
-				// Anchor's host property isn't correctly set when s.url is relative
+				
 				urlAnchor.href = urlAnchor.href;
 				s.crossDomain = originAnchor.protocol + "//" + originAnchor.host !==
 					urlAnchor.protocol + "//" + urlAnchor.host;
 			} catch ( e ) {
 
-				// If there is an error parsing the URL, assume it is crossDomain,
-				// it can be rejected by the transport if it is invalid
+			
 				s.crossDomain = true;
 			}
 		}
@@ -9674,8 +9588,6 @@ jQuery.extend( {
 			return jqXHR;
 		}
 
-		// We can fire global events as of now if asked to
-		// Don't fire events if jQuery.event is undefined in an AMD-usage scenario (trac-15118)
 		fireGlobals = jQuery.event && s.global;
 
 		// Watch for a new set of requests
@@ -9689,9 +9601,7 @@ jQuery.extend( {
 		// Determine if request has content
 		s.hasContent = !rnoContent.test( s.type );
 
-		// Save the URL in case we're toying with the If-Modified-Since
-		// and/or If-None-Match header later on
-		// Remove hash to simplify url manipulation
+
 		cacheURL = s.url.replace( rhash, "" );
 
 		// More options handling for requests with no content
@@ -9977,16 +9887,13 @@ jQuery._evalUrl = function( url, options, doc ) {
 	return jQuery.ajax( {
 		url: url,
 
-		// Make this explicit, since user can override this through ajaxSetup (trac-11264)
 		type: "GET",
 		dataType: "script",
 		cache: true,
 		async: false,
 		global: false,
 
-		// Only evaluate the response if it is successful (gh-4126)
-		// dataFilter is not invoked for failure responses, so using it instead
-		// of the default converter is kludgy but it works.
+		
 		converters: {
 			"text script": function() {}
 		},
@@ -10085,8 +9992,7 @@ var xhrSuccessStatus = {
 		// File protocol always yields status code 0, assume 200
 		0: 200,
 
-		// Support: IE <=9 only
-		// trac-1450: sometimes IE returns 1223 when it should be 204
+		
 		1223: 204
 	},
 	xhrSupported = jQuery.ajaxSettings.xhr();
@@ -10124,11 +10030,7 @@ jQuery.ajaxTransport( function( options ) {
 					xhr.overrideMimeType( options.mimeType );
 				}
 
-				// X-Requested-With header
-				// For cross-domain requests, seeing as conditions for a preflight are
-				// akin to a jigsaw puzzle, we simply never set it to be sure.
-				// (it can always be set on a per-request basis or even using ajaxSetup)
-				// For same-domain requests, won't change header if already provided.
+			
 				if ( !options.crossDomain && !headers[ "X-Requested-With" ] ) {
 					headers[ "X-Requested-With" ] = "XMLHttpRequest";
 				}
@@ -10150,15 +10052,11 @@ jQuery.ajaxTransport( function( options ) {
 								xhr.abort();
 							} else if ( type === "error" ) {
 
-								// Support: IE <=9 only
-								// On a manual native abort, IE9 throws
-								// errors on any property access that is not readyState
+							
 								if ( typeof xhr.status !== "number" ) {
 									complete( 0, "error" );
 								} else {
 									complete(
-
-										// File: protocol always yields status 0; see trac-8605, trac-14207
 										xhr.status,
 										xhr.statusText
 									);
@@ -10186,9 +10084,7 @@ jQuery.ajaxTransport( function( options ) {
 				xhr.onload = callback();
 				errorCallback = xhr.onerror = xhr.ontimeout = callback( "error" );
 
-				// Support: IE 9 only
-				// Use onreadystatechange to replace onabort
-				// to handle uncaught aborts
+			
 				if ( xhr.onabort !== undefined ) {
 					xhr.onabort = errorCallback;
 				} else {
@@ -10196,11 +10092,6 @@ jQuery.ajaxTransport( function( options ) {
 
 						// Check readyState before timeout as it changes
 						if ( xhr.readyState === 4 ) {
-
-							// Allow onerror to be called first,
-							// but that will not handle a native abort
-							// Also, save errorCallback to a variable
-							// as xhr.onerror cannot be accessed
 							window.setTimeout( function() {
 								if ( callback ) {
 									errorCallback();
@@ -10401,11 +10292,6 @@ jQuery.ajaxPrefilter( "json jsonp", function( s, originalSettings, jqXHR ) {
 
 
 
-// Support: Safari 8 only
-// In Safari 8 documents created via document.implementation.createHTMLDocument
-// collapse sibling forms: the second one becomes a child of the first one.
-// Because of that, this security measure has to be disabled in Safari 8.
-// https://bugs.webkit.org/show_bug.cgi?id=137337
 support.createHTMLDocument = ( function() {
 	var body = document.implementation.createHTMLDocument( "" ).body;
 	body.innerHTML = "<form></form><form></form>";
@@ -10413,10 +10299,7 @@ support.createHTMLDocument = ( function() {
 } )();
 
 
-// Argument "data" should be string of html
-// context (optional): If specified, the fragment will be created in this context,
-// defaults to document
-// keepScripts (optional): If true, will include scripts passed in the html string
+
 jQuery.parseHTML = function( data, context, keepScripts ) {
 	if ( typeof data !== "string" ) {
 		return [];
@@ -10430,14 +10313,9 @@ jQuery.parseHTML = function( data, context, keepScripts ) {
 
 	if ( !context ) {
 
-		// Stop scripts or inline event handlers from being executed immediately
-		// by using document.implementation
 		if ( support.createHTMLDocument ) {
 			context = document.implementation.createHTMLDocument( "" );
 
-			// Set the base href for the created document
-			// so any parsed elements with URLs
-			// are based on the document's URL (gh-2965)
 			base = context.createElement( "base" );
 			base.href = document.location.href;
 			context.head.appendChild( base );
@@ -10494,9 +10372,7 @@ jQuery.fn.load = function( url, params, callback ) {
 		jQuery.ajax( {
 			url: url,
 
-			// If "type" variable is undefined, then "GET" method will be used.
-			// Make value of this field explicit since
-			// user can override it through ajaxSetup method
+		
 			type: type || "GET",
 			dataType: "html",
 			data: params
@@ -10507,16 +10383,13 @@ jQuery.fn.load = function( url, params, callback ) {
 
 			self.html( selector ?
 
-				// If a selector was specified, locate the right elements in a dummy div
-				// Exclude scripts to avoid IE 'Permission Denied' errors
+			
 				jQuery( "<div>" ).append( jQuery.parseHTML( responseText ) ).find( selector ) :
 
 				// Otherwise use the full result
 				responseText );
 
-		// If the request succeeds, this function gets "data", "status", "jqXHR"
-		// but they are ignored because response was set above.
-		// If it fails, this function gets "jqXHR", "status", "error"
+	
 		} ).always( callback && function( jqXHR, status ) {
 			self.each( function() {
 				callback.apply( this, response || [ jqXHR.responseText, status, jqXHR ] );
@@ -10546,7 +10419,6 @@ jQuery.offset = {
 			curElem = jQuery( elem ),
 			props = {};
 
-		// Set position first, in-case top/left are set even on static elem
 		if ( position === "static" ) {
 			elem.style.position = "relative";
 		}
@@ -10557,8 +10429,7 @@ jQuery.offset = {
 		calculatePosition = ( position === "absolute" || position === "fixed" ) &&
 			( curCSSTop + curCSSLeft ).indexOf( "auto" ) > -1;
 
-		// Need to be able to calculate position if either
-		// top or left is auto and position is either absolute or fixed
+		
 		if ( calculatePosition ) {
 			curPosition = curElem.position();
 			curTop = curPosition.top;
@@ -10612,15 +10483,11 @@ jQuery.fn.extend( {
 			return;
 		}
 
-		// Return zeros for disconnected and hidden (display: none) elements (gh-2310)
-		// Support: IE <=11 only
-		// Running getBoundingClientRect on a
-		// disconnected node in IE throws an error
 		if ( !elem.getClientRects().length ) {
 			return { top: 0, left: 0 };
 		}
 
-		// Get document-relative position by adding viewport scroll to viewport-relative gBCR
+		
 		rect = elem.getBoundingClientRect();
 		win = elem.ownerDocument.defaultView;
 		return {
@@ -10629,8 +10496,7 @@ jQuery.fn.extend( {
 		};
 	},
 
-	// position() relates an element's margin box to its offset parent's padding box
-	// This corresponds to the behavior of CSS absolute positioning
+
 	position: function() {
 		if ( !this[ 0 ] ) {
 			return;
@@ -10640,17 +10506,15 @@ jQuery.fn.extend( {
 			elem = this[ 0 ],
 			parentOffset = { top: 0, left: 0 };
 
-		// position:fixed elements are offset from the viewport, which itself always has zero offset
+		
 		if ( jQuery.css( elem, "position" ) === "fixed" ) {
 
-			// Assume position:fixed implies availability of getBoundingClientRect
 			offset = elem.getBoundingClientRect();
 
 		} else {
 			offset = this.offset();
 
-			// Account for the *real* offset parent, which can be the document or its root element
-			// when a statically positioned element is identified
+			
 			doc = elem.ownerDocument;
 			offsetParent = elem.offsetParent || doc.documentElement;
 			while ( offsetParent &&
@@ -10675,16 +10539,7 @@ jQuery.fn.extend( {
 		};
 	},
 
-	// This method will return documentElement in the following cases:
-	// 1) For the element inside the iframe without offsetParent, this method will return
-	//    documentElement of the parent window
-	// 2) For the hidden or detached element
-	// 3) For body or html element, i.e. in case of the html node - it will return itself
-	//
-	// but those exceptions were never presented as a real life use-cases
-	// and might be considered as more preferable results.
-	//
-	// This logic, however, is not guaranteed and can change at any point in the future
+
 	offsetParent: function() {
 		return this.map( function() {
 			var offsetParent = this.offsetParent;
@@ -10730,12 +10585,7 @@ jQuery.each( { scrollLeft: "pageXOffset", scrollTop: "pageYOffset" }, function( 
 	};
 } );
 
-// Support: Safari <=7 - 9.1, Chrome <=37 - 49
-// Add the top/left cssHooks using jQuery.fn.position
-// Webkit bug: https://bugs.webkit.org/show_bug.cgi?id=29084
-// Blink bug: https://bugs.chromium.org/p/chromium/issues/detail?id=589347
-// getComputedStyle returns percent when specified for top/left/bottom/right;
-// rather than make the css module depend on the offset module, just check for it here
+
 jQuery.each( [ "top", "left" ], function( _i, prop ) {
 	jQuery.cssHooks[ prop ] = addGetHookIf( support.pixelPosition,
 		function( elem, computed ) {
@@ -10751,8 +10601,6 @@ jQuery.each( [ "top", "left" ], function( _i, prop ) {
 	);
 } );
 
-
-// Create innerHeight, innerWidth, height, width, outerHeight and outerWidth methods
 jQuery.each( { Height: "height", Width: "width" }, function( name, type ) {
 	jQuery.each( {
 		padding: "inner" + name,
@@ -10770,7 +10618,6 @@ jQuery.each( { Height: "height", Width: "width" }, function( name, type ) {
 
 				if ( isWindow( elem ) ) {
 
-					// $( window ).outerWidth/Height return w/h including scrollbars (gh-1729)
 					return funcName.indexOf( "outer" ) === 0 ?
 						elem[ "inner" + name ] :
 						elem.document.documentElement[ "client" + name ];
@@ -10780,8 +10627,6 @@ jQuery.each( { Height: "height", Width: "width" }, function( name, type ) {
 				if ( elem.nodeType === 9 ) {
 					doc = elem.documentElement;
 
-					// Either scroll[Width/Height] or offset[Width/Height] or client[Width/Height],
-					// whichever is greatest
 					return Math.max(
 						elem.body[ "scroll" + name ], doc[ "scroll" + name ],
 						elem.body[ "offset" + name ], doc[ "offset" + name ],
@@ -10861,16 +10706,9 @@ jQuery.each(
 
 
 
-// Support: Android <=4.0 only
-// Make sure we trim BOM and NBSP
-// Require that the "whitespace run" starts from a non-whitespace
-// to avoid O(N^2) behavior when the engine would try matching "\s+$" at each space position.
 var rtrim = /^[\s\uFEFF\xA0]+|([^\s\uFEFF\xA0])[\s\uFEFF\xA0]+$/g;
 
-// Bind a function to a context, optionally partially applying any
-// arguments.
-// jQuery.proxy is deprecated to promote standards (specifically Function#bind)
-// However, it is not slated for removal any time soon
+
 jQuery.proxy = function( fn, context ) {
 	var tmp, args, proxy;
 
@@ -10880,8 +10718,7 @@ jQuery.proxy = function( fn, context ) {
 		fn = tmp;
 	}
 
-	// Quick check to determine if target is callable, in the spec
-	// this throws a TypeError, but we will just return undefined.
+
 	if ( !isFunction( fn ) ) {
 		return undefined;
 	}
@@ -10892,7 +10729,6 @@ jQuery.proxy = function( fn, context ) {
 		return fn.apply( context || this, args.concat( slice.call( arguments ) ) );
 	};
 
-	// Set the guid of unique handler to the same of original handler, so it can be removed
 	proxy.guid = fn.guid = fn.guid || jQuery.guid++;
 
 	return proxy;
@@ -10917,15 +10753,9 @@ jQuery.now = Date.now;
 
 jQuery.isNumeric = function( obj ) {
 
-	// As of jQuery 3.0, isNumeric is limited to
-	// strings and numbers (primitives or objects)
-	// that can be coerced to finite numbers (gh-2662)
+
 	var type = jQuery.type( obj );
 	return ( type === "number" || type === "string" ) &&
-
-		// parseFloat NaNs numeric-cast false positives ("")
-		// ...but misinterprets leading-number strings, particularly hex literals ("0x...")
-		// subtraction forces infinities to NaN
 		!isNaN( obj - parseFloat( obj ) );
 };
 
@@ -10937,18 +10767,7 @@ jQuery.trim = function( text ) {
 
 
 
-// Register as a named AMD module, since jQuery can be concatenated with other
-// files that may use define, but not via a proper concatenation script that
-// understands anonymous AMD modules. A named AMD is safest and most robust
-// way to register. Lowercase jquery is used because AMD module names are
-// derived from file names, and jQuery is normally delivered in a lowercase
-// file name. Do this after creating the global so that if an AMD module wants
-// to call noConflict to hide this version of jQuery, it will work.
 
-// Note that for maximum portability, libraries that are not jQuery should
-// declare themselves as anonymous modules, and avoid setting a global if an
-// AMD loader is present. jQuery is a special case. For more information, see
-// https://github.com/jrburke/requirejs/wiki/Updating-existing-libraries#wiki-anon
 
 if ( typeof define === "function" && define.amd ) {
 	define( "jquery", [], function() {
@@ -10979,9 +10798,7 @@ jQuery.noConflict = function( deep ) {
 	return jQuery;
 };
 
-// Expose jQuery and $ identifiers, even in AMD
-// (trac-7102#comment:10, https://github.com/jquery/jquery/pull/557)
-// and CommonJS for browser emulators (trac-13566)
+
 if ( typeof noGlobal === "undefined" ) {
 	window.jQuery = window.$ = jQuery;
 }
@@ -10992,32 +10809,15 @@ if ( typeof noGlobal === "undefined" ) {
 return jQuery;
 } );
 
-/*!
- * Lightbox v2.11.4
- * by Lokesh Dhakar
- *
- * More info:
- * http://lokeshdhakar.com/projects/lightbox2/
- *
- * Copyright Lokesh Dhakar
- * Released under the MIT license
- * https://github.com/lokesh/lightbox2/blob/master/LICENSE
- *
- * @preserve
- */
-
-// Uses Node, AMD or browser globals to create a module.
 (function (root, factory) {
     if (typeof define === 'function' && define.amd) {
         // AMD. Register as an anonymous module.
         define(['jquery'], factory);
     } else if (typeof exports === 'object') {
-        // Node. Does not work with strict CommonJS, but
-        // only CommonJS-like environments that support module.exports,
-        // like Node.
+
         module.exports = factory(require('jquery'));
     } else {
-        // Browser globals (root is window)
+
         root.lightbox = factory(root.jQuery);
     }
 }(this, function ($) {
@@ -11032,29 +10832,20 @@ return jQuery;
     this.option(options);
   }
 
-  // Descriptions of all options available on the demo site:
-  // http://lokeshdhakar.com/projects/lightbox2/index.html#options
+
   Lightbox.defaults = {
     albumLabel: 'Image %1 of %2',
     alwaysShowNavOnTouchDevices: false,
     fadeDuration: 600,
     fitImagesInViewport: true,
     imageFadeDuration: 600,
-    // maxWidth: 800,
-    // maxHeight: 600,
+
     positionFromTop: 50,
     resizeDuration: 700,
     showImageNumberLabel: true,
     wrapAround: false,
     disableScrolling: false,
-    /*
-    Sanitize Title
-    If the caption data is trusted, for example you are hardcoding it in, then leave this to false.
-    This will free you to add html tags, such as links, in the caption.
 
-    If the caption data is user submitted or from some other untrusted source, then set this to true
-    to prevent xss and other injection attacks.
-     */
     sanitizeTitle: false
   };
 
@@ -11068,15 +10859,13 @@ return jQuery;
 
   Lightbox.prototype.init = function() {
     var self = this;
-    // Both enable and build methods require the body tag to be in the DOM.
+
     $(document).ready(function() {
       self.enable();
       self.build();
     });
   };
 
-  // Loop through anchors and areamaps looking for either data-lightbox attributes or rel attributes
-  // that contain 'lightbox'. When these are clicked, start lightbox.
   Lightbox.prototype.enable = function() {
     var self = this;
     $('body').on('click', 'a[rel^=lightbox], area[rel^=lightbox], a[data-lightbox], area[data-lightbox]', function(event) {
@@ -11085,8 +10874,6 @@ return jQuery;
     });
   };
 
-  // Build html for the lightbox and the overlay.
-  // Attach event handlers to the new DOM elements. click click click
   Lightbox.prototype.build = function() {
     if ($('#lightbox').length > 0) {
         return;
@@ -11094,17 +10881,6 @@ return jQuery;
 
     var self = this;
 
-    // The two root notes generated, #lightboxOverlay and #lightbox are given
-    // tabindex attrs so they are focusable. We attach our keyboard event
-    // listeners to these two elements, and not the document. Clicking anywhere
-    // while Lightbox is opened will keep the focus on or inside one of these
-    // two elements.
-    //
-    // We do this so we can prevent propogation of the Esc keypress when
-    // Lightbox is open. This prevents it from intefering with other components
-    // on the page below.
-    //
-    // Github issue: https://github.com/lokesh/lightbox2/issues/663
     $('<div id="lightboxOverlay" tabindex="-1" class="lightboxOverlay"></div><div id="lightbox" tabindex="-1" class="lightbox"><div class="lb-outerContainer"><div class="lb-container"><img class="lb-image" src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" alt=""/><div class="lb-nav"><a class="lb-prev" role="button" tabindex="0" aria-label="Previous image" href="" ></a><a class="lb-next" role="button" tabindex="0" aria-label="Next image" href="" ></a></div><div class="lb-loader"><a class="lb-cancel" role="button" tabindex="0"></a></div></div></div><div class="lb-dataContainer"><div class="lb-data"><div class="lb-details"><span class="lb-caption"></span><span class="lb-number"></span></div><div class="lb-closeContainer"><a class="lb-close" role="button" tabindex="0"></a></div></div></div></div>').appendTo($('body'));
 
     // Cache jQuery objects
@@ -11167,19 +10943,6 @@ return jQuery;
       return false;
     });
 
-    /*
-      Show context menu for image on right-click
-
-      There is a div containing the navigation that spans the entire image and lives above of it. If
-      you right-click, you are right clicking this div and not the image. This prevents users from
-      saving the image or using other context menu actions with the image.
-
-      To fix this, when we detect the right mouse button is pressed down, but not yet clicked, we
-      set pointer-events to none on the nav div. This is so that the upcoming right-click event on
-      the next mouseup will bubble down to the image. Once the right-click/contextmenu event occurs
-      we set the pointer events back to auto for the nav div so it can capture hover and left-click
-      events as usual.
-     */
     this.$nav.on('mousedown', function(event) {
       if (event.which === 3) {
         self.$nav.css('pointer-events', 'none');
@@ -11194,7 +10957,7 @@ return jQuery;
 
 
     this.$lightbox.find('.lb-loader, .lb-close').on('click keyup', function(e) {
-      // If mouse click OR 'enter' or 'space' keypress, close LB
+
       if (
         e.type === 'click' || (e.type === 'keyup' && (e.which === 13 || e.which === 32))) {
         self.end();
@@ -11203,7 +10966,7 @@ return jQuery;
     });
   };
 
-  // Show overlay and lightbox. If the image is part of a set, add siblings to album array.
+
   Lightbox.prototype.start = function($link) {
     var self    = this;
     var $window = $(window);
@@ -11222,8 +10985,6 @@ return jQuery;
         title: $link.attr('data-title') || $link.attr('title')
       });
     }
-
-    // Support both data-lightbox attribute and rel attribute implementations
     var dataLightboxValue = $link.attr('data-lightbox');
     var $links;
 
@@ -11237,10 +10998,8 @@ return jQuery;
       }
     } else {
       if ($link.attr('rel') === 'lightbox') {
-        // If image is not part of a set
         addToAlbum($link);
       } else {
-        // If image is part of a set
         $links = $($link.prop('tagName') + '[rel="' + $link.attr('rel') + '"]');
         for (var j = 0; j < $links.length; j = ++j) {
           addToAlbum($($links[j]));
@@ -11251,7 +11010,6 @@ return jQuery;
       }
     }
 
-    // Position Lightbox
     var top  = $window.scrollTop() + this.options.positionFromTop;
     var left = $window.scrollLeft();
     this.$lightbox.css({
@@ -11259,31 +11017,25 @@ return jQuery;
       left: left + 'px'
     }).fadeIn(this.options.fadeDuration);
 
-    // Disable scrolling of the page while open
+
     if (this.options.disableScrolling) {
       $('body').addClass('lb-disable-scrolling');
     }
 
     this.changeImage(imageNumber);
   };
-
-  // Hide most UI elements in preparation for the animated resizing of the lightbox.
   Lightbox.prototype.changeImage = function(imageNumber) {
     var self = this;
     var filename = this.album[imageNumber].link;
     var filetype = filename.split('.').slice(-1)[0];
     var $image = this.$lightbox.find('.lb-image');
-
-    // Disable keyboard nav during transitions
     this.disableKeyboardNav();
-
-    // Show loading state
     this.$overlay.fadeIn(this.options.fadeDuration);
     $('.lb-loader').fadeIn('slow');
     this.$lightbox.find('.lb-image, .lb-nav, .lb-prev, .lb-next, .lb-dataContainer, .lb-numbers, .lb-caption').hide();
     this.$outerContainer.addClass('animating');
 
-    // When image to show is preloaded, we send the width and height to sizeContainer()
+    
     var preloader = new Image();
     preloader.onload = function() {
       var $preloader;
@@ -11309,16 +11061,11 @@ return jQuery;
       windowWidth = $(window).width();
       windowHeight = $(window).height();
 
-      // Calculate the max image dimensions for the current viewport.
-      // Take into account the border around the image and an additional 10px gutter on each side.
+     
       maxImageWidth  = windowWidth - self.containerPadding.left - self.containerPadding.right - self.imageBorderWidth.left - self.imageBorderWidth.right - 20;
       maxImageHeight = windowHeight - self.containerPadding.top - self.containerPadding.bottom - self.imageBorderWidth.top - self.imageBorderWidth.bottom - self.options.positionFromTop - 70;
 
-      /*
-      Since many SVGs have small intrinsic dimensions, but they support scaling
-      up without quality loss because of their vector format, max out their
-      size inside the viewport.
-      */
+      
       if (filetype === 'svg') {
         if (aspectRatio >= 1) {
           imageWidth = maxImageWidth;
@@ -11332,10 +11079,10 @@ return jQuery;
 
       } else {
 
-        // Fit image inside the viewport.
+       
         if (self.options.fitImagesInViewport) {
 
-          // Check if image size is larger then maxWidth|maxHeight in settings
+          
           if (self.options.maxWidth && self.options.maxWidth < maxImageWidth) {
             maxImageWidth = self.options.maxWidth;
           }
@@ -11348,8 +11095,7 @@ return jQuery;
           maxImageHeight = self.options.maxHeight || preloader.height || maxImageHeight;
         }
 
-        // Is the current image's width or height is greater than the maxImageWidth or maxImageHeight
-        // option than we need to size down while maintaining the aspect ratio.
+       
         if ((preloader.width > maxImageWidth) || (preloader.height > maxImageHeight)) {
           if ((preloader.width / maxImageWidth) > (preloader.height / maxImageHeight)) {
             imageWidth  = maxImageWidth;
@@ -11368,21 +11114,14 @@ return jQuery;
       self.sizeContainer($image.width(), $image.height());
     };
 
-    // Preload image before showing
+
     preloader.src = this.album[imageNumber].link;
     this.currentImageIndex = imageNumber;
   };
 
-  // Stretch overlay to fit the viewport
+
   Lightbox.prototype.sizeOverlay = function() {
     var self = this;
-    /*
-    We use a setTimeout 0 to pause JS execution and let the rendering catch-up.
-    Why do this? If the `disableScrolling` option is set to true, a class is added to the body
-    tag that disables scrolling and hides the scrollbar. We want to make sure the scrollbar is
-    hidden before we measure the document width, as the presence of the scrollbar will affect the
-    number.
-    */
     setTimeout(function() {
       self.$overlay
         .width($(document).width())
@@ -11391,8 +11130,7 @@ return jQuery;
     }, 0);
   };
 
-  // Animate the size of the lightbox to fit the image we are showing
-  // This method also shows the the image.
+
   Lightbox.prototype.sizeContainer = function(imageWidth, imageHeight) {
     var self = this;
 
@@ -11406,7 +11144,7 @@ return jQuery;
       self.$lightbox.find('.lb-prevLink').height(newHeight);
       self.$lightbox.find('.lb-nextLink').height(newHeight);
 
-      // Set focus on one of the two root nodes so keyboard events are captured.
+
       self.$overlay.trigger('focus');
 
       self.showImage();
@@ -11424,7 +11162,7 @@ return jQuery;
     }
   };
 
-  // Display the image and its details and begin preload neighboring images.
+
   Lightbox.prototype.showImage = function() {
     this.$lightbox.find('.lb-loader').stop(true).hide();
     this.$lightbox.find('.lb-image').fadeIn(this.options.imageFadeDuration);
@@ -11435,11 +11173,9 @@ return jQuery;
     this.enableKeyboardNav();
   };
 
-  // Display previous and next navigation if appropriate.
+
   Lightbox.prototype.updateNav = function() {
-    // Check to see if the browser supports touch events. If so, we take the conservative approach
-    // and assume that mouse hover events are not supported and always show prev/next navigation
-    // arrows in image sets.
+
     var alwaysShowNav = false;
     try {
       document.createEvent('TouchEvent');
@@ -11471,12 +11207,11 @@ return jQuery;
     }
   };
 
-  // Display caption, image number, and closing button.
+ 
   Lightbox.prototype.updateDetails = function() {
     var self = this;
 
-    // Enable anchor clicks in the injected caption html.
-    // Thanks Nate Wright for the fix. @https://github.com/NateWr
+   
     if (typeof this.album[this.currentImageIndex].title !== 'undefined' &&
       this.album[this.currentImageIndex].title !== '') {
       var $caption = this.$lightbox.find('.lb-caption');
@@ -11502,7 +11237,7 @@ return jQuery;
     });
   };
 
-  // Preload previous and next images in set.
+  
   Lightbox.prototype.preloadNeighboringImages = function() {
     if (this.album.length > this.currentImageIndex + 1) {
       var preloadNext = new Image();
@@ -11531,7 +11266,7 @@ return jQuery;
 
     var keycode = event.keyCode;
     if (keycode === KEYCODE_ESC) {
-      // Prevent bubbling so as to not affect other components on the page.
+     
       event.stopPropagation();
       this.end();
     } else if (keycode === KEYCODE_LEFTARROW) {
@@ -11549,7 +11284,7 @@ return jQuery;
     }
   };
 
-  // Closing time. :-(
+ 
   Lightbox.prototype.end = function() {
     this.disableKeyboardNav();
     $(window).off('resize', this.sizeOverlay);

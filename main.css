@@ -342,6 +342,9 @@ main .videos {
   position: relative;
   height: 560px;
 }
+main .videos .background-bg {
+  background-color: #f6f7fb;
+}
 main .videos .background-bg .video11 video {
   width: 100%;
   height: 600px;
