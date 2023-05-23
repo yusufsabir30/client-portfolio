@@ -803,6 +803,9 @@ main .about .container .section-body .column-2 .skills .languages .language img 
     width: 40%;
     left: 8rem;
   }
+  main .videos .container .popup-video video {
+    width: 90%;
+  }
 }
 @media (max-width: 976px) {
   html {
@@ -823,6 +826,9 @@ main .about .container .section-body .column-2 .skills .languages .language img 
   }
   main .section .container .section-body .column-2 .skills .languages .language img {
     width: 35%;
+  }
+  main .videos .container .popup-video video {
+    width: 90%;
   }
   .footer2 {
     margin-top: 700px;
@@ -857,6 +863,9 @@ main .about .container .section-body .column-2 .skills .languages .language img 
   main .section .container .section-body .column-2 .skills .languages .language .persian {
     width: 27%;
   }
+  main .videos .container .popup-video video {
+    width: 90%;
+  }
   .footer2 {
     margin-top: 700px;
   }
@@ -881,7 +890,7 @@ main .about .container .section-body .column-2 .skills .languages .language img 
     margin-right: 2rem;
   }
   main .section .container .section-body .column-1 img {
-    width: 40%;
+    width: 35%;
   }
   main .section .container .section-body .column-2 .skills .languages ul .language {
     margin: 2rem;
@@ -891,6 +900,9 @@ main .about .container .section-body .column-2 .skills .languages .language img 
   }
   main .section .container .section-body .column-2 .skills .languages ul .language .persian {
     width: 30%;
+  }
+  main .videos .container .popup-video video {
+    width: 95%;
   }
   .main-photo::before {
     top: 45%;
@@ -903,9 +915,6 @@ main .about .container .section-body .column-2 .skills .languages .language img 
   }
   .container {
     width: 720px;
-  }
-  .videos .container .popup-video video {
-    width: 95%;
   }
 }
 @media (max-width: 680px) {
@@ -937,6 +946,9 @@ main .about .container .section-body .column-2 .skills .languages .language img 
   }
   main .section .container .section-body .column-2 .skills .languages ul .language .persian {
     width: 10%;
+  }
+  main .videos .container .popup-video video {
+    width: 90%;
   }
   .footer2 {
     margin-top: 1400px;
@@ -974,5 +986,8 @@ main .about .container .section-body .column-2 .skills .languages .language img 
   }
   main .section .container .section-body .column-2 .skills .languages ul .language .persian {
     width: 10%;
+  }
+  main .videos .container .popup-video video {
+    width: 95%;
   }
 }/*# sourceMappingURL=main.css.map */
