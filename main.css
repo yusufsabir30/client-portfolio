@@ -787,9 +787,9 @@ main .about .container .section-body .column-2 .skills .languages .language img 
   background-color: #ececec;
 }
 
-@media (max-width: 1500px) {
+@media (max-width: 2000px) {
   .footer2 {
-    margin-top: 750px;
+    margin-top: 1750px;
   }
 }
 @media (max-width: 1200px) {
