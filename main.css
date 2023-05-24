@@ -792,6 +792,11 @@ main .about .container .section-body .column-2 .skills .languages .language img 
     margin-top: 1620px;
   }
 }
+@media (max-width: 1600px) {
+  .footer2 {
+    margin-top: 800px;
+  }
+}
 @media (max-width: 1200px) {
   html {
     font-size: 9px;
