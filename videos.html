@@ -42,48 +42,62 @@
             </nav>
         </header>
 
-        <section class="videos section" id="videos">
-            <div class="background-bg2">
-        
-            </div>
+        <section class="videos section">
+            <div class="background-bg2"></div>
             <div class="container">
                 <div class="section-header">
                     <h3 class="title" data-title="Video Gallery" style="color:#fff">PROJECTS</h3>
                 </div>
                 <div class="section-body">
-                     <div class="video" style="border: 5px solid #f6f7fb;">
-                        <video src="video1.mp4"  muted ></video>
-                    </div>
-                    <div class="video" style="border: 5px solid #f6f7fb;">
-                        <video src="video2.mp4" muted ></video>
-                    </div> 
-                     <div class="video" style="border: 5px solid #f6f7fb;">
-                        <video src="video3.mp4"  muted></video>
-                    </div> 
-                     <div class="video" style="border: 5px solid #f6f7fb;">
-                        <video src= "video4.mp4"  muted></video>
-                    </div> 
-                     <div class="video" style="border: 5px solid #f6f7fb;">
-                        <video src="Video5.mp4"  muted></video>
-                    </div>
-                    <div class="video" style="border: 5px solid #f6f7fb;">
-                        <video src="Video6.mp4"  muted></video>
+                    <div class="row">
+                        <div class="col">
+                            <div class="feature-img">
+                                <img src="video-img-1.jpeg" width="100%">
+                                <img src="play-button.png" class="play-btn" onclick="playVideo('video1.mp4')">
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="feature-img">
+                                <img src="video-img-2.jpeg" width="100%">
+                                <img src="play-button.png" class="play-btn" onclick="playVideo('video2.mp4')">
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="feature-img">
+                                <img src="video-img-3.jpeg" width="100%">
+                                <img src="play-button.png" class="play-btn" onclick="playVideo('video3.mp4')">
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="feature-img">
+                                <img src="video-img-4.jpeg" width="100%">
+                                <img src="play-button.png" class="play-btn" onclick="playVideo('video4.mp4')">
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="feature-img">
+                                <img src="video-img-5.jpeg" width="100%">
+                                <img src="play-button.png" class="play-btn" onclick="playVideo('video5.mp4')">
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="feature-img">
+                                <img src="video-img-6.jpeg" width="100%">
+                                <img src="play-button.png" class="play-btn" onclick="playVideo('video6.mp4')">
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="popup-video">
-                    <span>&times;</span>
-                    <video src="Video1.mp4" controls autoplay style="border: 3px solid #212A3E;"></video>
+                <div class="video-player" id="videoPlayer">
+                    <video width="100%" controls autoplay id="myVideo">
+                        <source src="video1.mp4" type="video/mp4">
+                    </video>
+                    <img src="close-button.png" class="close-btn" onclick="stopVideo()">
                 </div> 
-                
             </div>
+           
         </section>
     </main>
-    <div class="scroll-totop">
-        <a href="#nav">
-            <i class="fa-solid fa-circle-arrow-up"></i>
-        </a>
-        
-    </div>
 
     <footer class="footer footer2">
         <div class="container">
@@ -110,18 +124,18 @@
     <script src="app.js"></script>
     <script src="gallery.js"></script>
     <script >
-        document.querySelectorAll('.section-body video').forEach(vid => {
-            vid.onclick = () => {
-                document.querySelector('.popup-video').style.display = 'block';
-                document.querySelector('.popup-video video').src = vid.getAttribute('src');
+        var videoPlayer = document.getElementById("videoPlayer");
+        var myVideo = document.getElementById("myVideo");
 
-            }
-        });
+        function stopVideo(){
+            videoPlayer.style.display = "none";
+            myVideo.muted = true;
+        }
 
-        document.querySelector('.popup-video span').onclick = () => {
-            document.querySelector('.popup-video').style.display = 'none';
-
-            document.querySelector('.popup-video video').pause();
+        function playVideo(file){
+            myVideo.src = file;
+            videoPlayer.style.display = "block";
+            myVideo.muted = false;
         }
     </script>
 </body>
