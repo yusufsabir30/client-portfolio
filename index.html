@@ -55,7 +55,12 @@
             
             <div class="background-bg">
                 <div class="video11">
-                    <video src="video1.mp4" autoplay loop muted></video>
+                    <video
+                    class="videoplayer"
+                    autoplay ="autoplay" loop muted playsinline
+                    >
+                        <source src="video1.mp4" type="video/mp4"> 
+                    </video>
                 </div>
             </div>
         </section>
@@ -91,7 +96,7 @@
                             <div class="languages">
                                 <ul>
                                     <li>
-                                        <div class="language">
+                                        <div class="language english">
                                             <h3>English</h3>
                                             <p class="l-text">Advanced</p>
                                             <img src="english.jpg" alt="">
@@ -172,7 +177,7 @@
                     <div class="grid">
                         <div class="grid-item models">
                             <div class="gallery-image">
-                                <a href="image1.jpeg" data-lightbox="roadtrip">
+                                <a href="image1.jpg" data-lightbox="roadtrip">
                                     <img src="image1.jpeg" alt="">
                                 </a>
                                 <div class="img-overlay">
@@ -280,9 +285,6 @@
             
         </div>
     </footer>
-
-
-
 
 
     <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>

@@ -445,7 +445,7 @@ main .videos .container .video-player video {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 87%;
+  width: 83%;
   border-radius: 50px;
   border: 3px solid #212A3E;
   -o-object-fit: cover;
@@ -724,6 +724,18 @@ main .about .container .section-body .column-2 .skills .languages .language img 
 .contact .contact-box .contact-info .information-wrap .contact-icon .fa-solid {
   margin-right: 23px;
 }
+.contact .contact-box .contact-info .information-wrap .contact-icon .info-list {
+  display: flex;
+}
+.contact .contact-box .contact-info .information-wrap .contact-icon .info-list li {
+  padding: 0rem 1rem;
+}
+.contact .contact-box .contact-info .information-wrap .contact-icon .info-list li:first-child {
+  padding-left: 0rem;
+}
+.contact .contact-box .contact-info .information-wrap .contact-icon .info-list li a:hover {
+  opacity: 0.7;
+}
 .contact .contact-box .contact-form {
   padding-left: 2rem;
 }
@@ -864,6 +876,9 @@ main .about .container .section-body .column-2 .skills .languages .language img 
   main .section .container .section-body .column-2 .skills .languages .language .persian {
     width: 27%;
   }
+  main .section .container .section-body .column-2 .skills .languages .english {
+    margin-left: 0px;
+  }
   main .section .container .section-header .title::after {
     height: 4px;
     width: 70px;
@@ -906,6 +921,9 @@ main .about .container .section-body .column-2 .skills .languages .language img 
   main .section .container .section-body .column-2 .skills .languages ul .language .persian {
     width: 30%;
   }
+  main .section .container .section-body .column-2 .skills .languages ul .english {
+    margin-left: 0px;
+  }
   main .section .container .section-header .title::after {
     height: 3px;
     width: 60px;
@@ -937,24 +955,25 @@ main .about .container .section-body .column-2 .skills .languages .language img 
     width: 95%;
   }
   main .section .container .section-body .column-1 {
-    margin-right: 2rem;
+    margin-right: 22rem;
   }
   main .section .container .section-body .column-1 img {
-    width: 50%;
-    left: 2rem;
-    margin-top: 30rem;
+    width: 36%;
   }
-  main .section .container .section-body .column-2 .skills .languages ul {
-    display: block;
+  main .section .container .section-body .column-2 {
+    font-size: 10.5px;
   }
   main .section .container .section-body .column-2 .skills .languages ul .language {
-    margin: 0.5rem;
+    margin: 2rem;
   }
   main .section .container .section-body .column-2 .skills .languages ul .language img {
-    width: 10%;
+    width: 35%;
   }
   main .section .container .section-body .column-2 .skills .languages ul .language .persian {
-    width: 10%;
+    width: 30%;
+  }
+  main .section .container .section-body .column-2 .skills .languages ul .english {
+    margin-left: 0px;
   }
   main .section .container .section-header .title::after {
     height: 2.5px;
@@ -981,24 +1000,25 @@ main .about .container .section-body .column-2 .skills .languages .language img 
     width: 95%;
   }
   main .section .container .section-body .column-1 {
-    margin-right: 2rem;
+    margin-right: 22rem;
   }
   main .section .container .section-body .column-1 img {
-    width: 50%;
-    left: 2rem;
-    margin-top: 30rem;
+    width: 36%;
   }
-  main .section .container .section-body .column-2 .skills .languages ul {
-    display: block;
+  main .section .container .section-body .column-2 {
+    font-size: 10px;
   }
   main .section .container .section-body .column-2 .skills .languages ul .language {
-    margin: 0.5rem;
+    margin: 2rem;
   }
   main .section .container .section-body .column-2 .skills .languages ul .language img {
-    width: 10%;
+    width: 35%;
   }
   main .section .container .section-body .column-2 .skills .languages ul .language .persian {
-    width: 10%;
+    width: 30%;
+  }
+  main .section .container .section-body .column-2 .skills .languages ul .english {
+    margin-left: 0px;
   }
   main .videos .container .popup-video video {
     width: 95%;
@@ -1024,24 +1044,25 @@ main .about .container .section-body .column-2 .skills .languages .language img 
     width: 95%;
   }
   main .section .container .section-body .column-1 {
-    margin-right: 2rem;
+    margin-right: 22rem;
   }
   main .section .container .section-body .column-1 img {
-    width: 50%;
-    left: 2rem;
-    margin-top: 30rem;
+    width: 36%;
   }
-  main .section .container .section-body .column-2 .skills .languages ul {
-    display: block;
+  main .section .container .section-body .column-2 {
+    font-size: 9px;
   }
   main .section .container .section-body .column-2 .skills .languages ul .language {
-    margin: 0.5rem;
+    margin: 2rem;
   }
   main .section .container .section-body .column-2 .skills .languages ul .language img {
-    width: 10%;
+    width: 35%;
   }
   main .section .container .section-body .column-2 .skills .languages ul .language .persian {
-    width: 10%;
+    width: 30%;
+  }
+  main .section .container .section-body .column-2 .skills .languages ul .english {
+    margin-left: 0px;
   }
   main .videos .container .popup-video video {
     width: 95%;
@@ -1070,24 +1091,25 @@ main .about .container .section-body .column-2 .skills .languages .language img 
     width: 95%;
   }
   main .section .container .section-body .column-1 {
-    margin-right: 2rem;
+    margin-right: 22rem;
   }
   main .section .container .section-body .column-1 img {
-    width: 50%;
-    left: 2rem;
-    margin-top: 30rem;
+    width: 36%;
   }
-  main .section .container .section-body .column-2 .skills .languages ul {
-    display: block;
+  main .section .container .section-body .column-2 {
+    font-size: 8.5px;
   }
   main .section .container .section-body .column-2 .skills .languages ul .language {
-    margin: 0.5rem;
+    margin: 2rem;
   }
   main .section .container .section-body .column-2 .skills .languages ul .language img {
-    width: 10%;
+    width: 35%;
   }
   main .section .container .section-body .column-2 .skills .languages ul .language .persian {
-    width: 10%;
+    width: 30%;
+  }
+  main .section .container .section-body .column-2 .skills .languages ul .english {
+    margin-left: 0px;
   }
   main .videos .container .popup-video video {
     width: 95%;
@@ -1120,24 +1142,25 @@ main .about .container .section-body .column-2 .skills .languages .language img 
     width: 50px;
   }
   main .section .container .section-body .column-1 {
-    margin-right: 2rem;
+    margin-right: 22rem;
   }
   main .section .container .section-body .column-1 img {
-    width: 50%;
-    left: 2rem;
-    margin-top: 30rem;
+    width: 36%;
   }
-  main .section .container .section-body .column-2 .skills .languages ul {
-    display: block;
+  main .section .container .section-body .column-2 {
+    font-size: 8px;
   }
   main .section .container .section-body .column-2 .skills .languages ul .language {
-    margin: 0.5rem;
+    margin: 2rem;
   }
   main .section .container .section-body .column-2 .skills .languages ul .language img {
-    width: 10%;
+    width: 33%;
   }
   main .section .container .section-body .column-2 .skills .languages ul .language .persian {
-    width: 10%;
+    width: 25%;
+  }
+  main .section .container .section-body .column-2 .skills .languages ul .english {
+    margin-left: 0px;
   }
   main .videos .container .popup-video video {
     width: 95%;
@@ -1166,24 +1189,25 @@ main .about .container .section-body .column-2 .skills .languages .language img 
     width: 95%;
   }
   main .section .container .section-body .column-1 {
-    margin-right: 2rem;
+    margin-right: 22rem;
   }
   main .section .container .section-body .column-1 img {
-    width: 50%;
-    left: 2rem;
-    margin-top: 30rem;
+    width: 36%;
   }
-  main .section .container .section-body .column-2 .skills .languages ul {
-    display: block;
+  main .section .container .section-body .column-2 {
+    font-size: 7.2px;
   }
   main .section .container .section-body .column-2 .skills .languages ul .language {
-    margin: 0.5rem;
+    margin: 2rem;
   }
   main .section .container .section-body .column-2 .skills .languages ul .language img {
-    width: 10%;
+    width: 33%;
   }
   main .section .container .section-body .column-2 .skills .languages ul .language .persian {
-    width: 10%;
+    width: 25%;
+  }
+  main .section .container .section-body .column-2 .skills .languages ul .english {
+    margin-left: 0px;
   }
   main .videos .container .popup-video video {
     width: 95%;
@@ -1209,24 +1233,25 @@ main .about .container .section-body .column-2 .skills .languages .language img 
     width: 95%;
   }
   main .section .container .section-body .column-1 {
-    margin-right: 2rem;
+    margin-right: 22rem;
   }
   main .section .container .section-body .column-1 img {
-    width: 50%;
-    left: 2rem;
-    margin-top: 30rem;
+    width: 36%;
   }
-  main .section .container .section-body .column-2 .skills .languages ul {
-    display: block;
+  main .section .container .section-body .column-2 {
+    font-size: 6.8px;
   }
   main .section .container .section-body .column-2 .skills .languages ul .language {
-    margin: 0.5rem;
+    margin: 2rem;
   }
   main .section .container .section-body .column-2 .skills .languages ul .language img {
-    width: 10%;
+    width: 33%;
   }
   main .section .container .section-body .column-2 .skills .languages ul .language .persian {
-    width: 10%;
+    width: 25%;
+  }
+  main .section .container .section-body .column-2 .skills .languages ul .english {
+    margin-left: 0px;
   }
   main .videos .container .popup-video video {
     width: 95%;
